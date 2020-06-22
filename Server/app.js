@@ -1,4 +1,8 @@
-global.config = require('./config.json');
+if (process.env.NODE_ENV === "production") {
+    global.config = require('./config-prod.json');
+} else {
+    global.config = require('./config-dev.json');
+}
 const express = require('express');
 const cors = require('cors');
 const authController = require('./controllers/auth-controller');
