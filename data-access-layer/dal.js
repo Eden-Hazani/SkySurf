@@ -8,13 +8,7 @@ const connection = mysql.createPool({
     database: config.mysql.database
 });
 
-// connection.connect(err => {
-//     if (err) {
-//         console.error(err);
-//         return;
-//     }
-//     console.log("We're connected");
-// });
+
 
 // Execute SQL statement:
 function executeAsync(sql) {

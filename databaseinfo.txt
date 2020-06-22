@@ -1,0 +1,7 @@
+// mysql://user:password@host/database?reconnect=true
+// mysql: //b2b32a9fdeb847:143382ec@eu-cdbr-west-03.cleardb.net/heroku_66c75264ffb641f?reconnect=true
+
+
+
+
+C:\xampp\mysql\bin\mysql.exe --host=eu-cdbr-west-03.cleardb.net --user=b2b32a9fdeb847 --password=143382ec --reconnect heroku_66c75264ffb641f < vacations.sql
