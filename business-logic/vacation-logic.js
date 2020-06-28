@@ -1,22 +1,34 @@
 const dal = require('../data-access-layer/dal');
+const { json } = require('express');
 
 
-async function getAllVacations() { //for every user that has signed in. 
-    const sql = `SELECT * FROM vacations`
+async function getAllUnPickedVacations(unPickedVacations) { //for every user that has signed in. 
+    let sql = `SELECT * FROM vacations`;
+    if (unPickedVacations.data.pickedVacations.length > 0) {
+        sql = sql.concat(` WHERE`)
+        for (let item of unPickedVacations.data.pickedVacations) {
+            sql = sql.concat(` vacationId <> ${item} AND `)
+        }
+        sql = sql.slice(0, -5)
+    }
     const vacations = await dal.executeAsync(sql);
     return vacations;
 }
 
+async function getAllPickedVacations(userId) {
+    const sql = `SELECT vacations.* FROM vacations JOIN usersvsvacations ON vacations.vacationID = usersvsvacations.vacationID AND usersvsvacations.userId = ${userId}`
+    const vacations = await dal.executeAsync(sql)
+    return vacations;
+}
+
 async function followVacation(pickedVacation) { //ONLY FOR USERS
-    // needs - User Id + pickedVacation Id 
-    const sql = `UPDATE users SET followsVacations = CONCAT(followsVacations,'${pickedVacation.id},') WHERE userId = ${pickedVacation.userId}`
+    const sql = `INSERT INTO usersvsvacations VALUES(${pickedVacation.userId} , ${pickedVacation.vacationId})`
     const updatedVacations = await dal.executeAsync(sql);
     return updatedVacations;
 }
 
 async function unfollowVacation(pickedVacation) { //ONLY FOR USERS  
-    // needs - User Id + pickedVacation Id 
-    const sql = `UPDATE users SET followsVacations = REPLACE(followsVacations, '${pickedVacation.id},' ,'') WHERE userId = ${pickedVacation.userId}`
+    const sql = `DELETE FROM usersvsvacations WHERE ${pickedVacation.vacationId} = usersvsvacations.vacationID AND ${pickedVacation.userId} = usersvsvacations.userId`
     const updatedVacations = await dal.executeAsync(sql);
     return updatedVacations;
 }
@@ -29,13 +41,20 @@ async function addVacation(vacation) { //for ADMIN ONLY!
         VALUES(DEFAULT,
         '${vacation.description}',
         '${vacation.destination}',
+        '${vacation.startDate}',
+        '${vacation.endDate}',
         '${vacation.vacationImg}',
-        '${vacation.vacationDates}',
          ${vacation.price}
          ,DEFAULT)`
     const addedVacation = await dal.executeAsync(sql);
     vacation.vacationId = addedVacation.insertId
     return vacation;
+}
+
+async function getAllVacations() {
+    const sql = `SELECT * FROM vacations`;
+    const vacations = await dal.executeAsync(sql);
+    return vacations;
 }
 
 async function removeVacation(vacationId) { //for ADMIN ONLY!
@@ -47,12 +66,14 @@ async function removeVacation(vacationId) { //for ADMIN ONLY!
 
 
 async function modifyVacation(vacation) { //for ADMIN ONLY!
+    console.log(vacation.startDate)
     const sql = `UPDATE vacations SET 
-    description = (CASE WHEN description <> '${vacation.description}' THEN '${vacation.description}' ELSE description END),
-    destination = (CASE WHEN destination <> '${vacation.destination}' THEN '${vacation.destination}' ELSE destination END),
-    vacationImg = (CASE WHEN vacationImg <> '${vacation.vacationImg}' THEN '${vacation.vacationImg}' ELSE vacationImg END),
-    vacationDates = (CASE WHEN vacationDates <> '${vacation.vacationDates}' THEN '${vacation.vacationDates}' ELSE vacationDates END),
-    price = (CASE WHEN price <> ${vacation.price} THEN ${vacation.price} ELSE price END)
+    description = (CASE WHEN '${vacation.description}' = 'undefined' THEN description ELSE  '${vacation.description}' END),
+    destination = (CASE WHEN '${vacation.destination}' = 'undefined' THEN destination ELSE '${vacation.destination}' END),
+    startDate = (CASE WHEN '${vacation.startDate}' = 'undefined' THEN startDate ELSE '${vacation.startDate}' END),
+    endDate = (CASE WHEN '${vacation.endDate}' = 'undefined' THEN endDate ELSE '${vacation.endDate}' END),
+    vacationImg = (CASE WHEN '${vacation.vacationImg}' = 'noImageEntered' THEN vacationImg ELSE '${vacation.vacationImg}' END),
+    price = (CASE WHEN ${vacation.price} = -1 THEN price ELSE ${vacation.price} END)
     WHERE ${vacation.vacationId} = vacationId`
     const modified = await dal.executeAsync(sql);
     return modified;
@@ -60,10 +81,12 @@ async function modifyVacation(vacation) { //for ADMIN ONLY!
 
 
 module.exports = {
-    getAllVacations,
+    getAllUnPickedVacations,
     followVacation,
     addVacation,
     modifyVacation,
     removeVacation,
-    unfollowVacation
+    unfollowVacation,
+    getAllPickedVacations,
+    getAllVacations
 }
