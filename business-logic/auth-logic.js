@@ -8,7 +8,7 @@ async function register(user) {
 }
 
 async function validateRegister(user) {
-    const sql = `SELECT * FROM users WHERE userName = '${user.userName}' AND passWord = '${user.passWord}'`
+    const sql = `SELECT * FROM users WHERE userName = '${user.userName}'`
     const users = await dal.executeAsync(sql);
     return users;
 }
@@ -26,8 +26,10 @@ async function login(credentials) {
 
 
 
+
+
 module.exports = {
     register,
     login,
-    validateRegister
+    validateRegister,
 }

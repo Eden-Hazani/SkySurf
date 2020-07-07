@@ -39,6 +39,8 @@ router.post('/followVacation', isUser, async(request, response) => {
         const vacations = request.body;
         const addedVacations = await vacationLogic.followVacation(vacations.data)
         response.json(addedVacations)
+        const updatedVacations = await vacationLogic.getAllVacations();
+        global.socketServer.emit("admin-change", updatedVacations);
     } catch (err) {
         response.status(500).send(err.message)
     }
@@ -51,6 +53,8 @@ router.delete('/unfollowVacation', isUser, async(request, response) => {
         const vacations = request.body;
         await vacationLogic.unfollowVacation(vacations)
         response.sendStatus(204)
+        const updatedVacations = await vacationLogic.getAllVacations();
+        global.socketServer.emit("admin-change", updatedVacations);
     } catch (err) {
         response.status(500).send(err.message)
     }

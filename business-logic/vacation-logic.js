@@ -23,13 +23,17 @@ async function getAllPickedVacations(userId) {
 
 async function followVacation(pickedVacation) { //ONLY FOR USERS
     const sql = `INSERT INTO usersvsvacations VALUES(${pickedVacation.userId} , ${pickedVacation.vacationId})`
+    const secSql = `UPDATE vacations SET numberOfFollowers=(numberOfFollowers+1) WHERE vacations.vacationId = ${pickedVacation.vacationId}`;
     const updatedVacations = await dal.executeAsync(sql);
+    await dal.executeAsync(secSql)
     return updatedVacations;
 }
 
 async function unfollowVacation(pickedVacation) { //ONLY FOR USERS  
     const sql = `DELETE FROM usersvsvacations WHERE ${pickedVacation.vacationId} = usersvsvacations.vacationID AND ${pickedVacation.userId} = usersvsvacations.userId`
+    const secSql = `UPDATE vacations SET numberOfFollowers=(numberOfFollowers-1) WHERE vacations.vacationId = ${pickedVacation.vacationId}`;
     const updatedVacations = await dal.executeAsync(sql);
+    await dal.executeAsync(secSql)
     return updatedVacations;
 }
 // UPDATE table SET fieldname=REPLACE(fieldname,'APS','')

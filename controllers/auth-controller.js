@@ -15,7 +15,7 @@ router.post("/register", async(request, response) => {
             request.body.passWord,
             0);
         const validation = await authLogic.validateRegister(user);
-        if (validation[0] !== undefined) {
+        if (validation.length > 0) {
             response.status(401).send('User Already exists in system!')
             return
         }
