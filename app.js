@@ -1,7 +1,10 @@
+let origin:string;
 if (process.env.NODE_ENV === "production") {
     global.config = require('./config-prod.json');
+    origin = 'http://www.sky-surfer.com'
 } else {
     global.config = require('./config-dev.json');
+    origin = 'http://localhost:3001'
 }
 const express = require('express');
 const cors = require('cors');
@@ -14,7 +17,7 @@ const fileUpload = require("express-fileupload");
 
 const server = express();
 server.use(cors({
-    origin: 'http://localhost:3001',
+    origin: origin,
     credentials: true
 }));
 
