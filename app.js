@@ -1,4 +1,4 @@
-let origin:string;
+let origin;
 if (process.env.NODE_ENV === "production") {
     global.config = require('./config-prod.json');
     origin = 'http://www.sky-surfer.com'
