@@ -1,7 +1,7 @@
 const dal = require('../data-access-layer/dal');
 
 async function register(user) {
-    const sql = `INSERT INTO users VALUES(DEFAULT,'${user.userName}','${user.passWord}',DEFAULT)`
+    const sql = `INSERT INTO users VALUES(DEFAULT,'${user.userName}','${user.passWord}','${user.firstName}','${user.lastName}',DEFAULT)`
     const info = await dal.executeAsync(sql);
     user.userId = info.insertId;
     return user;

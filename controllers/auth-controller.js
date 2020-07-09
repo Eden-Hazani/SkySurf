@@ -13,6 +13,8 @@ router.post("/register", async(request, response) => {
             0,
             request.body.userName,
             request.body.passWord,
+            request.body.firstName,
+            request.body.lastName,
             0);
         const validation = await authLogic.validateRegister(user);
         if (validation.length > 0) {
