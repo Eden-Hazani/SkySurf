@@ -87,6 +87,7 @@ router.get('/getAllVacations', isAdmin, async(request, response) => {
 router.post('/addVacation', isAdmin, async(request, response) => {
     try {
         const vacations = request.body;
+        console.log(vacations);
         if (vacations.price === undefined) {
             vacations.price = -1;
         }
