@@ -7,6 +7,8 @@ const Vacation = require('../models/vacation-model')
 const vacationLogic = require('../business-logic/vacation-logic');
 const router = express.Router();
 const uuid = require('uuid');
+const fs = require('fs')
+
 
 
 
@@ -65,6 +67,15 @@ router.delete('/unfollowVacation', isUser, async(request, response) => {
 router.delete('/removeVacation/:id', isAdmin, async(request, response) => {
     try {
         const id = +request.params.id;
+        const imageName = await vacationLogic.removeFile(id);
+        if (imageName != 'noImageEntered') {
+            fs.unlink(`./_front-end/uploads/${imageName}`, (err) => {
+                if (err) {
+                    console.error(err)
+                }
+                console.log(`${imageName} has been deleted`)
+            })
+        }
         await vacationLogic.removeVacation(id);
         response.sendStatus(204);
         const updatedVacations = await vacationLogic.getAllVacations();
@@ -77,7 +88,7 @@ router.delete('/removeVacation/:id', isAdmin, async(request, response) => {
 router.get('/getAllVacations', isAdmin, async(request, response) => {
     try {
         const vacations = await vacationLogic.getAllVacations();
-        console.log(vacations);
+        console.log(vacations)
         response.json(vacations);
     } catch (err) {
         response.status(500).send(err.message)
@@ -88,7 +99,6 @@ router.get('/getAllVacations', isAdmin, async(request, response) => {
 router.post('/addVacation', isAdmin, async(request, response) => {
     try {
         const vacations = request.body;
-        console.log(vacations);
         if (vacations.price === undefined) {
             vacations.price = -1;
         }

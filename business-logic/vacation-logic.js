@@ -61,11 +61,18 @@ async function getAllVacations() {
     return vacations;
 }
 
+
 async function removeVacation(vacationId) { //for ADMIN ONLY!
     // needs - vacation ID
     const sql = `DELETE FROM vacations WHERE '${vacationId}' = vacationId`
     const Removed = await dal.executeAsync(sql);
     return Removed;
+}
+
+async function removeFile(vacationId) {
+    const sql = `SELECT vacationImg from vacations WHERE vacationId = ${vacationId}`;
+    const imageName = await dal.executeAsync(sql);
+    return imageName;
 }
 
 
@@ -92,5 +99,6 @@ module.exports = {
     removeVacation,
     unfollowVacation,
     getAllPickedVacations,
-    getAllVacations
+    getAllVacations,
+    removeFile
 }
