@@ -77,6 +77,7 @@ router.delete('/removeVacation/:id', isAdmin, async(request, response) => {
 router.get('/getAllVacations', isAdmin, async(request, response) => {
     try {
         const vacations = await vacationLogic.getAllVacations();
+        console.log(vacations);
         response.json(vacations);
     } catch (err) {
         response.status(500).send(err.message)
