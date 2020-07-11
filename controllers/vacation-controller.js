@@ -69,11 +69,11 @@ router.delete('/removeVacation/:id', isAdmin, async(request, response) => {
         const id = +request.params.id;
         const imageName = await vacationLogic.removeFile(id);
         if (imageName != 'noImageEntered') {
-            fs.unlink(`./_front-end/uploads/${imageName}`, (err) => {
+            fs.unlink(`./_front-end/uploads/${imageName[0].vacationImg}`, (err) => {
                 if (err) {
                     console.error(err)
                 }
-                console.log(`${imageName} has been deleted`)
+                console.log(`${imageName[0].vacationImg} has been deleted`)
             })
         }
         await vacationLogic.removeVacation(id);
