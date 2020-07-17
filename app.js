@@ -1,7 +1,7 @@
 let origin;
 if (process.env.NODE_ENV === "production") {
     global.config = require('./config-prod.json');
-    origin = 'http://www.sky-surfer.com'
+    origin = 'https://www.sky-surfer.com'
 } else {
     global.config = require('./config-dev.json');
     origin = 'http://localhost:3001'
