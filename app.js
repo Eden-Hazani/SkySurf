@@ -10,6 +10,7 @@ const express = require('express');
 const cors = require('cors');
 const authController = require('./controllers/auth-controller');
 const vacationController = require('./controllers/vacation-controller');
+const middlewareController = require('./controllers/middleware-controller')
 const session = require('express-session');
 const socketIo = require('socket.io');
 const path = require("path");
@@ -32,6 +33,7 @@ server.use(express.static(path.join(__dirname, "./_front-end")));
 server.use(express.json());
 server.use('/api', authController);
 server.use('/api/vacations', vacationController);
+server.use('/api/validator', middlewareController);
 server.use("*", (request, response) => {
     response.sendFile(path.join(__dirname, './_front-end/index.html'));
 });

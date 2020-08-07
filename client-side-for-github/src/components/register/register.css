@@ -1,0 +1,10 @@
+.signUpForm {
+    background-color: rgba(255, 235, 205, 0.486);
+    padding: 50px;
+    border-radius: 50px;
+}
+
+.signupButt {
+    border: 1px black solid !important;
+    background-color: rgba(255, 235, 205, 0.486) !important;
+}

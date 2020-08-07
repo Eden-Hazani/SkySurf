@@ -1,0 +1,13 @@
+.changeCredentialsBackground {
+    padding: 20px;
+    border-radius: 50px !important;
+    background-color: rgba(255, 255, 255, 0.493) !important;
+    width: 1000px;
+    height: 250px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.accSettings {
+    text-shadow: 1px 1px 1px black;
+}

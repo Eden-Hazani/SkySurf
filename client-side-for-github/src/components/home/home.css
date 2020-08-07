@@ -1,0 +1,190 @@
+.vacationContainerBackground {
+    width: 90%;
+    min-height: 450px;
+    height: 100%;
+    overflow-y: hidden;
+    border: 1px black solid;
+    background-position: center !important;
+    background-size: cover !important;
+    color: white !important;
+    text-shadow: 1px 2px 2px black;
+}
+
+.vacationContainer {
+    margin-bottom: 15px !important;
+}
+
+.mobileDetail {
+    display: none !important;
+}
+
+.vacationInformation {
+    padding: 30px !important;
+    min-height: 30vh;
+    min-width: 10vh;
+    background-color: rgba(255, 213, 159, 0.856) !important;
+}
+
+.vacationInformation>div>p {
+    text-shadow: 1px 1px 1px black;
+}
+
+.vacationSearchBar>div {
+    background-color: rgba(255, 255, 255, 0.507);
+    padding: 15px;
+    margin-right: 10px;
+    border-radius: 20px;
+}
+
+.vacationSearchBar>div>div>div {
+    margin: auto;
+}
+
+@media screen and (max-width: 600px) {
+    .vacationContainerBackground {
+        min-height: 100px;
+        height: 100px;
+        position: relative;
+    }
+    .followerBackground {
+        position: absolute;
+        top: 1px;
+        right: 5px;
+        width: 150px !important;
+        height: 30px !important;
+        border-radius: 15px !important;
+    }
+    .followerBackground>p {
+        top: -10px !important;
+        font-size: 14px;
+        display: inline-block;
+        margin-right: 6px;
+    }
+    .mobileDetail {
+        display: inline-flex !important;
+        position: absolute !important;
+        left: 10px;
+        top: 55px;
+        background-color: rgba(255, 127, 80, 0.082) !important;
+        border: 1px black solid !important;
+        text-shadow: 1px 1px 1px black;
+        color: white !important;
+    }
+    .destH4 {
+        font-size: 27px !important;
+    }
+    .follow {
+        margin-top: 10px;
+    }
+    .unFollow {
+        margin-top: 10px;
+    }
+    .vacationSearchBar {
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+    .vacationSearchBar>div {
+        margin: auto;
+    }
+}
+
+.logoutButton {
+    margin-right: 10px;
+}
+
+.followerBackground {
+    background-color: rgba(255, 255, 255, 0.699);
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    padding: 5px;
+}
+
+.followerBackground>p {
+    top: 15px;
+    position: relative;
+    color: black;
+    text-shadow: none;
+}
+
+.vacationDescription>h6 {
+    word-wrap: break-word;
+    width: 400px;
+}
+
+.unFollow {
+    background-image: url('/assets/heart-filed.svg');
+    background-size: 30px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    user-select: none;
+    background-position: center;
+    display: inline-block;
+    border: 1px solid black;
+    padding: 5px;
+    background-repeat: no-repeat;
+    border-radius: 15px;
+}
+
+.follow {
+    background-image: url('/assets/heart.svg');
+    background-size: 30px;
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+    cursor: pointer;
+    user-select: none;
+    background-position: center;
+    display: inline-block;
+    border: 1px solid black;
+    padding: 5px;
+    background-repeat: no-repeat;
+    border-radius: 15px;
+}
+
+.descContainer {
+    background-color: rgba(255, 255, 255, 0.699) !important;
+    padding: 10px;
+    height: 70%;
+    width: 80%;
+}
+
+.descContainer>h6 {
+    text-shadow: none;
+    color: black;
+}
+
+.disappear {
+    animation: disappear 3s;
+}
+
+@keyframes disappear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.videoBackground {
+    position: fixed;
+    z-index: -1;
+    top: 0px;
+    width: 100%;
+}
+
+@media(min-aspect-ratio:16/9) {
+    .videoBackground {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media(max-aspect-ratio:16/9) {
+    .videoBackground {
+        width: auto;
+        height: 100%;
+    }
+}

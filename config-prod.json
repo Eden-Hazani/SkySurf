@@ -4,5 +4,8 @@
         "user": "b2cbc78e83d79f",
         "password": "53303e12",
         "database": "heroku_ff82ad1a63f189c"
+    },
+    "jwt": {
+        "secretKey": "da88ac8a-32ec-4054-8cc3-2c0e02c087e3"
     }
 }

@@ -1,29 +1,28 @@
 const express = require('express');
 const authLogic = require('../business-logic/auth-logic');
 const User = require('../models/user-model');
+const jwt = require('jsonwebtoken');
+const { request, response } = require('express');
 const router = express.Router();
-
-
-
-
 
 router.post("/register", async(request, response) => {
     try {
-        const user = new User(
+        const credentials = new User(
+            0,
             0,
             request.body.userName,
             request.body.passWord,
             request.body.firstName,
             request.body.lastName,
             0);
-        const validation = await authLogic.validateRegister(user);
+        const validation = await authLogic.validateRegister(credentials);
         if (validation.length > 0) {
             response.status(401).send('User Already exists in system!')
             return
         }
-        const addedUser = await authLogic.register(user);
-        request.session.user = addedUser;
-        response.status(201).json(addedUser);
+        const user = await authLogic.register(credentials);
+        const token = jwt.sign({ user }, config.jwt.secretKey, { expiresIn: "30m" })
+        response.status(201).json({ user, token });
     } catch (err) {
         response.status(500).send(err.message)
     }
@@ -32,6 +31,7 @@ router.post("/register", async(request, response) => {
 router.post("/login", async(request, response) => {
     try {
         const credentials = new User(
+            0,
             0,
             request.body.userName,
             request.body.passWord,
@@ -42,29 +42,35 @@ router.post("/login", async(request, response) => {
             response.status(401).send('User not in System')
             return;
         }
-        request.session.user = user;
-        response.json(user);
+        const token = jwt.sign({ user }, config.jwt.secretKey, { expiresIn: "30m" })
+        response.json({ user, token });
     } catch (err) {
         response.status(500).send(err.message)
     }
 })
 
-router.post("/logout", (request, response) => {
+router.patch("/userDetails/:uuid", async(request, response) => {
     try {
-        request.session.destroy();
-        response.end();
+        const details = request.body;
+        details.uuid = request.params.uuid
+        await authLogic.changeUserDetails(details);
+        const token = jwt.sign({ details }, config.jwt.secretKey, { expiresIn: "30m" })
+        response.json({ details, token });
     } catch (err) {
-        response.status(500).send(err.message)
+        console.log(err.message)
     }
 })
 
-router.get('/userLogged', async(request, response) => {
-    if (request.session.user === undefined) {
-        response.status(401).send('Not Allowed')
-        return;
+router.post("/checkPass", async(request, response) => {
+    try {
+        const user = request.body;
+        const userResponse = await authLogic.validatePassword(user);
+        response.json(userResponse);
+    } catch (err) {
+        console.log(err.message)
     }
-    response.json(request.session.user);
 })
+
 
 
 module.exports = router;

@@ -77,7 +77,6 @@ async function removeFile(vacationId) {
 
 
 async function modifyVacation(vacation) { //for ADMIN ONLY!
-    console.log(vacation.startDate)
     const sql = `UPDATE vacations SET 
     description = (CASE WHEN '${vacation.description}' = 'undefined' THEN description ELSE  '${vacation.description}' END),
     destination = (CASE WHEN '${vacation.destination}' = 'undefined' THEN destination ELSE '${vacation.destination}' END),

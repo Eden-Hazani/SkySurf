@@ -1,0 +1,16 @@
+.modelWindow {
+    padding: 100px;
+    min-height: 30vh;
+    min-width: 30vh;
+    background-color: rgba(255, 213, 159, 0.856) !important;
+}
+
+.vacationDescriptionAdmin>h6 {
+    word-break: break-all;
+    max-width: 250px;
+}
+
+.title {
+    width: 100% !important;
+    text-align: center !important;
+}

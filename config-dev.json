@@ -4,5 +4,8 @@
         "user": "root",
         "password": "",
         "database": "vacations"
+    },
+    "jwt": {
+        "secretKey": "da88ac8a-32ec-4054-8cc3-2c0e02c087e3"
     }
 }
