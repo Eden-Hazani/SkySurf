@@ -14,7 +14,7 @@ const fs = require('fs')
 
 
 // for everyone
-router.get('/getPickedVacations/:id', loggedIn, async(request, response) => {
+router.get('/getPickedVacations/:id', loggedIn, async (request, response) => {
     try {
         const id = +request.params.id;
         const vacations = await vacationLogic.getAllPickedVacations(id)
@@ -24,7 +24,7 @@ router.get('/getPickedVacations/:id', loggedIn, async(request, response) => {
     }
 })
 
-router.post('/getUnPickedVacations', loggedIn, async(request, response) => {
+router.post('/getUnPickedVacations', loggedIn, async (request, response) => {
     try {
         const unPickedVacations = request.body;
         const vacations = await vacationLogic.getAllUnPickedVacations(unPickedVacations)
@@ -36,7 +36,7 @@ router.post('/getUnPickedVacations', loggedIn, async(request, response) => {
 
 
 // only for USERS
-router.post('/followVacation', isUser, async(request, response) => {
+router.post('/followVacation', isUser, async (request, response) => {
     try {
         const vacations = request.body;
         const addedVacations = await vacationLogic.followVacation(vacations.data)
@@ -50,7 +50,7 @@ router.post('/followVacation', isUser, async(request, response) => {
 
 
 // only for USERS
-router.delete('/unfollowVacation', isUser, async(request, response) => {
+router.delete('/unfollowVacation', isUser, async (request, response) => {
     try {
         const vacations = request.body;
         await vacationLogic.unfollowVacation(vacations)
@@ -64,7 +64,7 @@ router.delete('/unfollowVacation', isUser, async(request, response) => {
 
 
 // only for ADMIN
-router.delete('/removeVacation/:id', isAdmin, async(request, response) => {
+router.delete('/removeVacation/:id', isAdmin, async (request, response) => {
     try {
         const id = +request.params.id;
         const imageName = await vacationLogic.removeFile(id);
@@ -85,7 +85,7 @@ router.delete('/removeVacation/:id', isAdmin, async(request, response) => {
     }
 })
 
-router.get('/getAllVacations', isAdmin, async(request, response) => {
+router.get('/getAllVacations', isAdmin, async (request, response) => {
     try {
         const vacations = await vacationLogic.getAllVacations();
         response.json(vacations);
@@ -94,8 +94,8 @@ router.get('/getAllVacations', isAdmin, async(request, response) => {
     }
 })
 
-// only for ADMIN
-router.post('/addVacation', isAdmin, async(request, response) => {
+// only for ADMIN.
+router.post('/addVacation', isAdmin, async (request, response) => {
     try {
         const vacations = request.body;
         if (vacations.price === undefined) {
@@ -130,7 +130,7 @@ router.post('/addVacation', isAdmin, async(request, response) => {
 })
 
 // only for ADMIN
-router.post('/modify', isAdmin, async(request, response) => {
+router.post('/modify', isAdmin, async (request, response) => {
     try {
         const vacations = request.body;
         if (vacations.price === undefined) {
